@@ -1,8 +1,10 @@
 package com.chessmaster.piece;
 
+import com.chessmaster.config.Color;
 import com.chessmaster.manager.Field;
+import com.chessmaster.manager.Rendable;
 
-public abstract class Piece {
+public abstract class Piece implements Rendable {
     private String color;
     private int power;
     private int id;
@@ -27,6 +29,14 @@ public abstract class Piece {
         return id;
     }
 
+    protected void setPower(int power) {
+        this.power = power;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
+    }
+
     public Field getField() {
         return field;
     }
@@ -35,32 +45,40 @@ public abstract class Piece {
         this.field = field;
     }
 
-    public void move(Field field) {
+    public boolean move(Field field) {
         if (isMoveValid(field)) {
             if (field.isEmpty()) {
                 moveToField(field);
+                return true;
             } else if (this.isEnemy(field.getPiece())) {
                 this.attack(field.getPiece());
+                return true;
             } else {
                 System.out.println("Field occupied by teammate piece.");
-                return;
+                return false;
             }
         } else {
             System.out.println("Move is not valid!");
+            return false;
         }
     }
 
     public boolean isEnemy(Piece piece) {
-        return this.color.equals(piece.getColor());
+        return !this.color.equals(piece.getColor());
     }
 
     protected void moveToField(Field fieldToMoveTo) {
+        Field fieldToMoveFrom = this.getField();
+        fieldToMoveFrom.setPiece(null);
+
         fieldToMoveTo.setPiece(this);
         this.setField(fieldToMoveTo);
     }
 
+    @Override
     public void render() {
-        // implement later or make abstract
+        String colorLetter = this.color.equals(Color.WHITE)? "W" : "B";
+        System.out.print(colorLetter + this.id);
     }
 
     public void attack(Piece pieceToAttack) {

@@ -2,7 +2,7 @@ package com.chessmaster.manager;
 
 import com.chessmaster.piece.Piece;
 
-public class Field {
+public class Field implements Rendable {
     private int xPosition;
     private int yPosition;
     private Piece piece;
@@ -52,5 +52,14 @@ public class Field {
         }
 
         return false;
+    }
+
+    @Override
+    public void render() {
+        if(this.isEmpty()){
+            System.out.print("  ");
+        } else {
+            this.getPiece().render();
+        }
     }
 }

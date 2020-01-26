@@ -15,6 +15,15 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean move(Field field) {
+        boolean moveIsValid = super.move(field);
+        if(moveIsValid){
+            this.hasMoved = true;
+        }
+        return moveIsValid;
+    }
+
+    @Override
     public boolean isMoveValid(Field field) {
         if (!super.isMoveValid(field)) {
             return false;
