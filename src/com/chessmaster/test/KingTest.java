@@ -1,6 +1,6 @@
 package com.chessmaster.test;
 
-import com.chessmaster.config.PieceColor;
+import com.chessmaster.config.Color;
 import com.chessmaster.manager.Field;
 import com.chessmaster.piece.King;
 import com.chessmaster.piece.Piece;
@@ -11,7 +11,7 @@ public class KingTest {
     public static void testIfPieceCanMoveOneField() {
         System.out.print("testIfPieceCanMoveOneField -> ");
 
-        Piece testElement = new King(PieceColor.BLACK, new Field(1, 1));
+        Piece testElement = new King(Color.BLACK, new Field(1, 1));
 
         boolean isValid = testElement.isMoveValid(new Field(1, 2));
 
@@ -22,7 +22,7 @@ public class KingTest {
     public static void testIfPieceCanMoveMoreThanTwoFields(){
         System.out.print("testIfPieceCanMoveMoreThanTwoFields -> ");
 
-        Piece testElement = new King(PieceColor.BLACK, new Field(1, 1));
+        Piece testElement = new King(Color.BLACK, new Field(1, 1));
 
         boolean isValid = testElement.isMoveValid(new Field(1, 6));
 

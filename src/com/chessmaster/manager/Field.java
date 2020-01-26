@@ -38,10 +38,14 @@ public class Field {
             return false;
         }
 
+        // this is for checking if the argument you pass to the function
+        // is of type Field, because if it's not, there's no need to compare the fields in the 'if' below and cast them
+        //as well
         if (field instanceof Field) {
             return false;
         }
 
+        // this is for checking the fields positions, not their references
         if (((Field) field).getXPosition() == this.getXPosition() &&
                 ((Field) field).getYPosition() == this.getYPosition()) {
             return true;

@@ -1,6 +1,6 @@
 package com.chessmaster.test;
 
-import com.chessmaster.config.PieceColor;
+import com.chessmaster.config.Color;
 import com.chessmaster.manager.Field;
 import com.chessmaster.piece.Piece;
 import com.chessmaster.piece.Queen;
@@ -10,7 +10,7 @@ public class QueenTest {
     public static void testIfPieceCanMoveVertically() {
         System.out.print("testIfPieceCanMoveVertically -> ");
 
-        Piece testElement = new Queen(PieceColor.BLACK, new Field(1, 1));
+        Piece testElement = new Queen(Color.BLACK, new Field(1, 1));
 
         boolean isValid = testElement.isMoveValid(new Field(1, 6));
 
@@ -21,7 +21,7 @@ public class QueenTest {
     public static void testIfPieceCanMoveDiagonally(){
         System.out.print("testIfPieceCanMoveDiagonally -> ");
 
-        Piece testElement = new Queen(PieceColor.BLACK, new Field(1, 1));
+        Piece testElement = new Queen(Color.BLACK, new Field(1, 1));
 
         boolean isValid = testElement.isMoveValid(new Field(6, 6));
 

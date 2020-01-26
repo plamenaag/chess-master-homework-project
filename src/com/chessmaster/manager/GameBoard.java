@@ -14,6 +14,10 @@ public class GameBoard {
         initializeFields(sizeX, sizeY);
     }
 
+    // this constructor is calling the 1st constructor
+    // example: you want to create GameBoard 5x5
+    // if you call GameBoard(5); - > this will call the
+    // constructor above and pass him the value of 5 TWICE
     public GameBoard(int size) {
         this(size, size);
     }

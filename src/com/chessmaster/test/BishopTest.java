@@ -1,6 +1,6 @@
 package com.chessmaster.test;
 
-import com.chessmaster.config.PieceColor;
+import com.chessmaster.config.Color;
 import com.chessmaster.manager.Field;
 import com.chessmaster.piece.Bishop;
 import com.chessmaster.piece.Piece;
@@ -10,7 +10,7 @@ public class BishopTest {
     public static void testIfPieceCanMoveVertically() {
         System.out.print("testIfPieceCanMoveVertically -> ");
 
-        Piece testElement = new Bishop(PieceColor.BLACK, new Field(1, 1));
+        Piece testElement = new Bishop(Color.BLACK, new Field(1, 1));
 
         boolean isValid = testElement.isMoveValid(new Field(1, 6));
 
@@ -21,7 +21,7 @@ public class BishopTest {
     public static void testIfPieceCanMoveDiagonally(){
         System.out.print("testIfPieceCanMoveDiagonally -> ");
 
-        Piece testElement = new Bishop(PieceColor.BLACK, new Field(1, 1));
+        Piece testElement = new Bishop(Color.BLACK, new Field(1, 1));
 
         boolean isValid = testElement.isMoveValid(new Field(6, 6));
 
