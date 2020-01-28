@@ -17,11 +17,11 @@ public class PieceStartPosition {
         return pieceId;
     }
 
-    public int getxPosition() {
+    public int getXPosition() {
         return xPosition;
     }
 
-    public int getyPosition() {
+    public int getYPosition() {
         return yPosition;
     }
 

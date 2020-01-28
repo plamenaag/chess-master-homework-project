@@ -31,7 +31,6 @@ public class GameBoard implements Rendable {
         }
     }
 
-
     public Field getFieldByPosition(int xPos, int yPos) {
         return fields.stream().filter(field -> field.getXPosition() == xPos && field.getYPosition() == yPos).findFirst().orElse(null);
     }

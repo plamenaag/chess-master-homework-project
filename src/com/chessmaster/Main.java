@@ -34,7 +34,7 @@ public class Main {
         players.add(new Player(Color.BLACK));
 
         for (PieceStartPosition pieceStartPosition : generatePieceList()) {
-            Field field = gameBoard.getFieldByPosition(pieceStartPosition.getxPosition(), pieceStartPosition.getyPosition());
+            Field field = gameBoard.getFieldByPosition(pieceStartPosition.getXPosition(), pieceStartPosition.getYPosition());
             if (field == null) {
                 System.out.println(pieceStartPosition.getColor() + " piece with id " + pieceStartPosition.getPieceId() + " not added.Field position invalid.");
             } else {
