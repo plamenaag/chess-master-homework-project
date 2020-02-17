@@ -7,9 +7,9 @@ public class Knight extends Piece {
 
     public Knight(String color, Field field) {
         super(color, field, 5, 3);
-        if(color.equals(Color.BLACK)){
+        if (color.equals(Color.BLACK)) {
             super.setIconName("bk");
-        }else{
+        } else {
             super.setIconName("wk");
         }
     }

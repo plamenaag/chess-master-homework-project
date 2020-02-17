@@ -57,19 +57,20 @@ public abstract class Piece implements Rendable {
                 this.attack(field.getPiece());
                 return true;
             } else {
-                if(gameInfo!=null){
+                if (gameInfo != null) {
                     gameInfo.addMsg("Field occupied by teammate piece.");
-                }else{
+                } else {
                     System.out.println("Field occupied by teammate piece.");
                 }
                 return false;
             }
         } else {
-            if(gameInfo!=null){
+            if (gameInfo != null) {
                 gameInfo.addMsg("Move is not valid!");
-            }else{
+            } else {
                 System.out.println("Move is not valid!");
             }
+
             return false;
         }
     }
@@ -88,7 +89,7 @@ public abstract class Piece implements Rendable {
 
     @Override
     public void render() {
-        String colorLetter = this.color.equals(Color.WHITE)? "W" : "B";
+        String colorLetter = this.color.equals(Color.WHITE) ? "W" : "B";
         System.out.print(colorLetter + this.id);
     }
 
@@ -107,9 +108,9 @@ public abstract class Piece implements Rendable {
 
     public boolean isMoveValid(Field field) {
         if (this.field.equals(field)) {
-            if(gameInfo!=null){
+            if (gameInfo != null) {
                 gameInfo.addMsg("Can not move piece to the same spot");
-            }else{
+            } else {
                 System.out.println("Can not move piece to the same spot");
             }
             return false;
@@ -118,11 +119,11 @@ public abstract class Piece implements Rendable {
         return true;
     }
 
-    public String getIconPath(){
+    public String getIconPath() {
         return "./main/resources/" + iconName + ".png";
     }
 
-    protected void setIconName(String iconName){
+    protected void setIconName(String iconName) {
         this.iconName = iconName;
     }
 

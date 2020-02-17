@@ -20,5 +20,4 @@ public class Player {
     public void setTurnCount(int turnCount) {
         this.turnCount = turnCount;
     }
-
 }

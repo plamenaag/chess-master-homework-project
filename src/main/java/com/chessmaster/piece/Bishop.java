@@ -7,9 +7,9 @@ public class Bishop extends Piece {
 
     public Bishop(String color, Field field) {
         super(color, field, 5, 2);
-        if(color.equals(Color.BLACK)){
+        if (color.equals(Color.BLACK)) {
             this.setIconName("bb");
-        }else{
+        } else {
             this.setIconName("wb");
         }
 

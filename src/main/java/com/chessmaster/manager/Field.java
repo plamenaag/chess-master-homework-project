@@ -30,7 +30,7 @@ public class Field implements Rendable {
     }
 
     public int getScreenYPosition() {
-        return  Constants.BAR_HEIGHT + Constants.BORDER_WIDTH + 1 + this.getYPosition() * (Constants.BLOCK_SIZE + 1) + Constants.GAME_INFO_DISPLAY_HEIGHT;
+        return Constants.BAR_HEIGHT + Constants.BORDER_WIDTH + 1 + this.getYPosition() * (Constants.BLOCK_SIZE + 1) + Constants.GAME_INFO_DISPLAY_HEIGHT;
 
     }
 
@@ -66,7 +66,7 @@ public class Field implements Rendable {
 
     @Override
     public void render() {
-        if(this.isEmpty()){
+        if (this.isEmpty()) {
             System.out.print("  ");
         } else {
             this.getPiece().render();

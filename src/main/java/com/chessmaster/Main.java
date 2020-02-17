@@ -9,6 +9,12 @@ import main.java.com.chessmaster.manager.GameInfo;
 import main.java.com.chessmaster.piece.Piece;
 import main.java.com.chessmaster.piece.PieceFactory;
 import main.java.com.chessmaster.player.Player;
+import main.java.com.chessmaster.test.BishopTest;
+import main.java.com.chessmaster.test.KingTest;
+import main.java.com.chessmaster.test.KnightTest;
+import main.java.com.chessmaster.test.PawnTest;
+import main.java.com.chessmaster.test.QueenTest;
+import main.java.com.chessmaster.test.RookTest;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,12 +23,12 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-//        PawnTest.run();
-//        BishopTest.run();
-//        QueenTest.run();
-//        KingTest.run();
-//        RookTest.run();
-//        KnightTest.run();
+        PawnTest.run();
+        BishopTest.run();
+        QueenTest.run();
+        KingTest.run();
+        RookTest.run();
+        KnightTest.run();
 
         GameInfo gameInfo = new GameInfo();
         GameBoard gameBoard = new GameBoard(8);
@@ -35,7 +41,7 @@ public class Main {
             if (field == null) {
                 System.out.println(pieceStartPosition.getColor() + " piece with id " + pieceStartPosition.getPieceId() + " not added.Field position invalid.");
             } else {
-                Piece piece = PieceFactory.createPiece(pieceStartPosition.getColor(), pieceStartPosition.getPieceId(), field,gameInfo);
+                Piece piece = PieceFactory.createPiece(pieceStartPosition.getColor(), pieceStartPosition.getPieceId(), field, gameInfo);
                 if (piece == null) {
                     System.out.println(pieceStartPosition.getColor() + " piece with id " + pieceStartPosition.getPieceId() + " not added.No such piece");
                 }
@@ -43,7 +49,7 @@ public class Main {
             }
         }
 
-        GameEngine gameEngine = new GameEngine(gameBoard, players,gameInfo);
+        GameEngine gameEngine = new GameEngine(gameBoard, players, gameInfo);
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

@@ -11,9 +11,9 @@ public class Chudaka extends Pawn implements Blastable {
         super(color, field, moveDirection);
         super.setPower(15);
         super.setId(7);
-        if(color.equals(Color.BLACK)){
+        if (color.equals(Color.BLACK)) {
             this.setIconName("bch");
-        }else{
+        } else {
             this.setIconName("wch");
         }
     }
@@ -22,9 +22,9 @@ public class Chudaka extends Pawn implements Blastable {
     public boolean blast(Field field) {
         if (isBlastValid(field)) {
             if (field.isEmpty()) {
-                if(super.gameInfo!=null){
+                if (super.gameInfo != null) {
                     super.gameInfo.addMsg("Can not blast empty field!");
-                }else{
+                } else {
                     System.out.println("Can not blast empty field!");
                 }
                 return false;
@@ -32,25 +32,26 @@ public class Chudaka extends Pawn implements Blastable {
                 field.getPiece().kill();
                 return true;
             } else {
-                if(super.gameInfo!=null){
+                if (super.gameInfo != null) {
                     super.gameInfo.addMsg("Field occupied by teammate piece. Can not blast");
-                }else{
+                } else {
                     System.out.println("Field occupied by teammate piece. Can not blast");
                 }
+
                 return false;
             }
         } else {
-            if(super.gameInfo!=null){
+            if (super.gameInfo != null) {
                 super.gameInfo.addMsg("Blast is not valid!");
-            }else{
+            } else {
                 System.out.println("Blast is not valid!");
             }
+
             return false;
         }
     }
 
     public boolean isBlastValid(Field field) {
-
         Field currentField = this.getField();
         // diagonal move
         if (Math.abs(currentField.getXPosition() - field.getXPosition()) == 1

@@ -13,9 +13,9 @@ public class Pawn extends Piece {
         super(color, field, 1, 1);
         this.hasMoved = false;
         this.moveDirection = moveDirection;
-        if(color.equals(Color.BLACK)){
+        if (color.equals(Color.BLACK)) {
             this.setIconName("bp");
-        }else{
+        } else {
             this.setIconName("wp");
         }
     }
@@ -23,7 +23,7 @@ public class Pawn extends Piece {
     @Override
     public boolean move(Field field) {
         boolean moveIsValid = super.move(field);
-        if(moveIsValid){
+        if (moveIsValid) {
             this.hasMoved = true;
         }
         return moveIsValid;
@@ -40,18 +40,18 @@ public class Pawn extends Piece {
         // check movement direction
         if (this.moveDirection == PawnMoveDirection.UP) {
             if (currentField.getYPosition() > field.getYPosition()) {
-                if(super.gameInfo!=null){
+                if (super.gameInfo != null) {
                     super.gameInfo.addMsg("Pawn can not go backwards!");
-                }else{
+                } else {
                     System.out.println("Pawn can not go backwards!");
                 }
                 return false;
             }
         } else if (this.moveDirection == PawnMoveDirection.DOWN) {
             if (currentField.getYPosition() < field.getYPosition()) {
-                if(super.gameInfo!=null){
+                if (super.gameInfo != null) {
                     super.gameInfo.addMsg("Pawn can not go backwards!");
-                }else{
+                } else {
                     System.out.println("Pawn can not go backwards!");
                 }
                 return false;

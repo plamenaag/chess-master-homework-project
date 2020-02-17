@@ -29,7 +29,6 @@ public class GameEngine extends JFrame implements MouseListener {
     private GameInfo gameInfo;
     private Field clickedFieldForSelectedPiece;
     private Field clickedFieldForSelectedFieldToMoveTo;
-
     private Piece selectedPiece;
     private Field selectedFieldToMoveTo;
     private String mouseBtnClicked;
@@ -40,7 +39,6 @@ public class GameEngine extends JFrame implements MouseListener {
         this.players = players;
         this.gameInfo = gameInfo;
         initializeScreen();
-
     }
 
     private void initializeScreen() {
@@ -119,7 +117,6 @@ public class GameEngine extends JFrame implements MouseListener {
             this.repaint();
             this.runLoop();
         }
-
     }
 
     @Override
@@ -133,22 +130,19 @@ public class GameEngine extends JFrame implements MouseListener {
             msgStartY += 15;
         }
 
-
         int lineY = Constants.BAR_HEIGHT + Constants.BORDER_WIDTH + Constants.GAME_INFO_DISPLAY_HEIGHT - 5;
         g.setColor(java.awt.Color.red);
         g.fillRect(0, lineY, this.getWidth(), 5);
         g.setColor(java.awt.Color.darkGray);
-//
+
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 
         BufferedImage img = null;
-
 
         boolean isBlack = true;
         for (Field field : this.gameBoard.getFields()) {
             int x = field.getScreenXPosition();
             int y = field.getScreenYPosition();
-
 
             if (field.getXPosition() != 0) {
                 if (isBlack) {
@@ -176,8 +170,6 @@ public class GameEngine extends JFrame implements MouseListener {
                 }
                 g.drawImage(img, x, y, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE, this);
             }
-
-
         }
     }
 
@@ -199,8 +191,6 @@ public class GameEngine extends JFrame implements MouseListener {
 
     private Piece selectPiece(Player player) {
         try {
-
-
             if (this.clickedFieldForSelectedPiece == null) {
                 gameInfo.addMsg("Choose piece");
                 return null;
@@ -223,7 +213,6 @@ public class GameEngine extends JFrame implements MouseListener {
                 gameInfo.addMsg("Choose piece");
                 return null;
             }
-
         } catch (Exception ex) {
             gameInfo.addMsg("Something went wrong.");
             gameInfo.addMsg("Choose piece");
@@ -233,15 +222,12 @@ public class GameEngine extends JFrame implements MouseListener {
 
     private Field selectFieldToMoveTo() {
         try {
-
-
             if (this.clickedFieldForSelectedFieldToMoveTo == null) {
                 gameInfo.addMsg("Choose field to move to");
                 return null;
             }
 
             return this.clickedFieldForSelectedFieldToMoveTo;
-
         } catch (Exception ex) {
             gameInfo.addMsg("Something went wrong.");
             return null;
@@ -290,6 +276,7 @@ public class GameEngine extends JFrame implements MouseListener {
                 return field;
             }
         }
+
         return null;
     }
 }

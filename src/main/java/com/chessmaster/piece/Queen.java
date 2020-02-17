@@ -7,9 +7,9 @@ public class Queen extends Piece {
 
     public Queen(String color, Field field) {
         super(color, field, 10, 6);
-        if(color.equals(Color.BLACK)){
+        if (color.equals(Color.BLACK)) {
             this.setIconName("bq");
-        }else{
+        } else {
             this.setIconName("wq");
         }
     }

@@ -8,9 +8,9 @@ public class King extends Piece {
 
     public King(String color, Field field) {
         super(color, field, 6, 5);
-        if(color.equals(Color.BLACK)){
+        if (color.equals(Color.BLACK)) {
             this.setIconName("bking");
-        }else{
+        } else {
             this.setIconName("wking");
         }
     }

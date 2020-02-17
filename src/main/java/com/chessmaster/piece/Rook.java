@@ -7,9 +7,9 @@ public class Rook extends Piece {
 
     public Rook(String color, Field field) {
         super(color, field, 5, 4);
-        if(color.equals(Color.BLACK)){
+        if (color.equals(Color.BLACK)) {
             this.setIconName("br");
-        }else{
+        } else {
             this.setIconName("wr");
         }
     }

@@ -7,20 +7,20 @@ public class GameInfo {
     private List<String> infoList;
     private int msgCount;
 
-    public GameInfo(){
-        msgCount=0;
+    public GameInfo() {
+        msgCount = 0;
         infoList = new ArrayList<>();
     }
 
-    public void addMsg(String msg){
+    public void addMsg(String msg) {
         msgCount++;
-        if(infoList.size()>=6){
+        if (infoList.size() >= 6) {
             infoList.remove(0);
         }
-        infoList.add(msgCount + ". " +msg);
+        infoList.add(msgCount + ". " + msg);
     }
 
-    public List<String> getInfo(){
-        return  infoList;
+    public List<String> getInfo() {
+        return infoList;
     }
 }
