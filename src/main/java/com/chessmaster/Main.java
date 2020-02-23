@@ -44,6 +44,8 @@ public class Main {
                 Piece piece = PieceFactory.createPiece(pieceStartPosition.getColor(), pieceStartPosition.getPieceId(), field, gameInfo);
                 if (piece == null) {
                     System.out.println(pieceStartPosition.getColor() + " piece with id " + pieceStartPosition.getPieceId() + " not added.No such piece");
+                } else {
+                    piece.setGameBoard(gameBoard);
                 }
                 field.setPiece(piece);
             }
@@ -77,8 +79,7 @@ public class Main {
         pieceStartPositions.add(new PieceStartPosition(Color.WHITE, 2, 5, 0));
         pieceStartPositions.add(new PieceStartPosition(Color.WHITE, 3, 6, 0));
         pieceStartPositions.add(new PieceStartPosition(Color.WHITE, 4, 7, 0));
-
-
+        
         pieceStartPositions.add(new PieceStartPosition(Color.BLACK, 1, 0, 6));
         pieceStartPositions.add(new PieceStartPosition(Color.BLACK, 1, 1, 6));
         pieceStartPositions.add(new PieceStartPosition(Color.BLACK, 1, 2, 6));

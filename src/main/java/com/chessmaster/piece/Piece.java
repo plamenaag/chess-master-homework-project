@@ -2,9 +2,11 @@ package main.java.com.chessmaster.piece;
 
 import main.java.com.chessmaster.config.Color;
 import main.java.com.chessmaster.manager.Field;
+import main.java.com.chessmaster.manager.GameBoard;
 import main.java.com.chessmaster.manager.GameInfo;
 import main.java.com.chessmaster.manager.Rendable;
 
+@SuppressWarnings("ALL")
 public abstract class Piece implements Rendable {
     private String color;
     private int power;
@@ -12,12 +14,17 @@ public abstract class Piece implements Rendable {
     private Field field;
     private String iconName;
     protected GameInfo gameInfo;
+    protected GameBoard gameBoard;
 
     protected Piece(String color, Field field, int power, int id) {
         this.color = color;
         this.field = field;
         this.power = power;
         this.id = id;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     public String getColor() {
@@ -53,16 +60,9 @@ public abstract class Piece implements Rendable {
             if (field.isEmpty()) {
                 moveToField(field);
                 return true;
-            } else if (this.isEnemy(field.getPiece())) {
+            } else {
                 this.attack(field.getPiece());
                 return true;
-            } else {
-                if (gameInfo != null) {
-                    gameInfo.addMsg("Field occupied by teammate piece.");
-                } else {
-                    System.out.println("Field occupied by teammate piece.");
-                }
-                return false;
             }
         } else {
             if (gameInfo != null) {
@@ -113,6 +113,17 @@ public abstract class Piece implements Rendable {
             } else {
                 System.out.println("Can not move piece to the same spot");
             }
+
+            return false;
+        }
+
+        if (!field.isEmpty() && !this.isEnemy(field.getPiece())) {
+            if (gameInfo != null) {
+                gameInfo.addMsg("Field occupied by teammate piece.");
+            } else {
+                System.out.println("Field occupied by teammate piece.");
+            }
+
             return false;
         }
 

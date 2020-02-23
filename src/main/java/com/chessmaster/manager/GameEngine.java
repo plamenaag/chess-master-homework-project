@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -32,6 +33,7 @@ public class GameEngine extends JFrame implements MouseListener {
     private Piece selectedPiece;
     private Field selectedFieldToMoveTo;
     private String mouseBtnClicked;
+    private List<Field> validMoves;
 
     public GameEngine(GameBoard gameBoard, List<Player> players, GameInfo gameInfo) {
         super();
@@ -71,7 +73,6 @@ public class GameEngine extends JFrame implements MouseListener {
         this.selectedFieldToMoveTo = null;
         executor = Executors.newScheduledThreadPool(1);
         this.runLoop();
-
     }
 
     public void runLoop() {
@@ -82,7 +83,7 @@ public class GameEngine extends JFrame implements MouseListener {
             this.selectedPiece = null;
             this.selectedFieldToMoveTo = null;
             currentPlayer = nextPlayer;
-            gameInfo.addMsg((currentPlayer.getColor().equals(Color.WHITE) ? "White" : "Black") + " Player's move. ");
+            gameInfo.addMsg((currentPlayer.getColor().equals(Color.WHITE) ? "White" : "Black") + " Player's move.");
         }
 
         this.selectedPiece = selectPiece(currentPlayer);
@@ -92,12 +93,15 @@ public class GameEngine extends JFrame implements MouseListener {
             return;
         }
 
+        validMoves = getPieceValidMoves(selectedPiece);
+
         this.selectedFieldToMoveTo = selectFieldToMoveTo();
         if (selectedFieldToMoveTo == null) {
             this.clickedFieldForSelectedFieldToMoveTo = null;
             this.repaint();
             return;
         }
+
         boolean validMove;
 
         if (selectedPiece instanceof Blastable && this.mouseBtnClicked != null && this.mouseBtnClicked.equals("RIGHT_BTN")) {
@@ -106,6 +110,7 @@ public class GameEngine extends JFrame implements MouseListener {
             validMove = selectedPiece.move(selectedFieldToMoveTo);
         }
 
+        validMoves = null;
 
         if (validMove) {
             currentPlayer.setTurnCount(currentPlayer.getTurnCount() + 1);
@@ -117,6 +122,18 @@ public class GameEngine extends JFrame implements MouseListener {
             this.repaint();
             this.runLoop();
         }
+    }
+
+    private List<Field> getPieceValidMoves(Piece piece) {
+        gameInfo.setSuppressAdd(true);
+        List<Field> fields = new ArrayList<>();
+        for (Field field : gameBoard.getFields()) {
+            if (piece.isMoveValid(field)) {
+                fields.add(field);
+            }
+        }
+        gameInfo.setSuppressAdd(false);
+        return fields;
     }
 
     @Override
@@ -154,13 +171,18 @@ public class GameEngine extends JFrame implements MouseListener {
                 }
             }
 
+            java.awt.Color oldColor = g.getColor();
             if (this.clickedFieldForSelectedPiece != null && this.clickedFieldForSelectedPiece.equals(field)) {
                 g.setColor(java.awt.Color.red);
             } else if (this.clickedFieldForSelectedFieldToMoveTo != null && this.clickedFieldForSelectedFieldToMoveTo.equals(field)) {
                 g.setColor(java.awt.Color.blue);
+            } else if (this.validMoves != null && validMoves.contains(field)) {
+                g.setColor(java.awt.Color.green);
             }
 
             g.fillRect(x, y, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE);
+
+            g.setColor(oldColor);
 
             if (!field.isEmpty()) {
                 try {
@@ -245,6 +267,7 @@ public class GameEngine extends JFrame implements MouseListener {
         } else {
             this.mouseBtnClicked = "LEFT_BTN";
         }
+
         if (clickedFieldForSelectedPiece == null) {
             clickedFieldForSelectedPiece = getFieldByMouseClickPos(e.getX(), e.getY()); //set
         } else {

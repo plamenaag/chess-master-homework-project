@@ -63,6 +63,14 @@ public class Pawn extends Piece {
                 && (Math.abs(currentField.getYPosition() - field.getYPosition()) == 1
                 || Math.abs(currentField.getYPosition() - field.getYPosition()) == 2)
                 && field.isEmpty()) {
+            if (this.gameBoard != null && Math.abs(currentField.getYPosition() - field.getYPosition()) == 2) {
+                int yPos = this.moveDirection == PawnMoveDirection.UP ? currentField.getYPosition() + 1 : currentField.getYPosition() - 1;
+                Field fieldOnPath = this.gameBoard.getFieldByPosition(currentField.getXPosition(), yPos);
+                if (fieldOnPath != null && !fieldOnPath.isEmpty()) {
+                    return false;
+                }
+            }
+
             return true;
         }
 
