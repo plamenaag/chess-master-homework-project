@@ -6,7 +6,7 @@ import main.java.com.chessmaster.manager.Field;
 public class Knight extends Piece {
 
     public Knight(String color, Field field) {
-        super(color, field, 5, 3);
+        super(color, field, 5, 3, 8);
         if (color.equals(Color.BLACK)) {
             super.setIconName("bk");
         } else {

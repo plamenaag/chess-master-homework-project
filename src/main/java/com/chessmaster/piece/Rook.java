@@ -7,7 +7,7 @@ import main.java.com.chessmaster.manager.Field;
 public class Rook extends Piece {
 
     public Rook(String color, Field field) {
-        super(color, field, 5, 4);
+        super(color, field, 5, 4, 7);
         if (color.equals(Color.BLACK)) {
             this.setIconName("br");
         } else {

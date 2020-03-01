@@ -104,6 +104,8 @@ public class GameEngine extends JFrame implements MouseListener {
 
         boolean validMove;
 
+        Piece possibleKill = selectedFieldToMoveTo.getPiece();
+
         if (selectedPiece instanceof Blastable && this.mouseBtnClicked != null && this.mouseBtnClicked.equals("RIGHT_BTN")) {
             validMove = ((Blastable) selectedPiece).blast(selectedFieldToMoveTo);
         } else {
@@ -113,6 +115,10 @@ public class GameEngine extends JFrame implements MouseListener {
         validMoves = null;
 
         if (validMove) {
+            if (possibleKill != null) {
+                currentPlayer.setScore(currentPlayer.getScore() + possibleKill.getPoints());
+            }
+
             currentPlayer.setTurnCount(currentPlayer.getTurnCount() + 1);
             this.repaint();
             executor.schedule(this::runLoop, 500, TimeUnit.MILLISECONDS);
@@ -139,6 +145,13 @@ public class GameEngine extends JFrame implements MouseListener {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
+        Player whitePlayer = players.stream().filter(p -> p.getColor().equals(Color.WHITE)).findFirst().orElse(null);
+        Player blackPlayer = players.stream().filter(p -> p.getColor().equals(Color.BLACK)).findFirst().orElse(null);
+        g.setFont(new Font("arial", Font.PLAIN, 14));
+        g.drawString("White player score: " + whitePlayer.getScore(), 390, 65);
+        g.setFont(new Font("arial", Font.PLAIN, 14));
+        g.drawString("Black player score: " + blackPlayer.getScore(), 390, 80);
 
         g.setFont(new Font("arial", Font.PLAIN, 14));
         int msgStartY = 45;

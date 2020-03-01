@@ -7,7 +7,7 @@ import main.java.com.chessmaster.manager.Field;
 public class Bishop extends Piece {
 
     public Bishop(String color, Field field) {
-        super(color, field, 5, 2);
+        super(color, field, 5, 2, 6);
         if (color.equals(Color.BLACK)) {
             this.setIconName("bb");
         } else {

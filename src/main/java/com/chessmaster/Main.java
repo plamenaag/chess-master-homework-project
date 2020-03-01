@@ -79,7 +79,7 @@ public class Main {
         pieceStartPositions.add(new PieceStartPosition(Color.WHITE, 2, 5, 0));
         pieceStartPositions.add(new PieceStartPosition(Color.WHITE, 3, 6, 0));
         pieceStartPositions.add(new PieceStartPosition(Color.WHITE, 4, 7, 0));
-        
+
         pieceStartPositions.add(new PieceStartPosition(Color.BLACK, 1, 0, 6));
         pieceStartPositions.add(new PieceStartPosition(Color.BLACK, 1, 1, 6));
         pieceStartPositions.add(new PieceStartPosition(Color.BLACK, 1, 2, 6));

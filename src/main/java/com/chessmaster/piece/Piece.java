@@ -15,12 +15,14 @@ public abstract class Piece implements Rendable {
     private String iconName;
     protected GameInfo gameInfo;
     protected GameBoard gameBoard;
+    protected int points;
 
-    protected Piece(String color, Field field, int power, int id) {
+    protected Piece(String color, Field field, int power, int id, int points) {
         this.color = color;
         this.field = field;
         this.power = power;
         this.id = id;
+        this.points = points;
     }
 
     public void setGameBoard(GameBoard gameBoard) {
@@ -53,6 +55,26 @@ public abstract class Piece implements Rendable {
 
     public void setField(Field field) {
         this.field = field;
+    }
+
+    public String getIconPath() {
+        return "./main/resources/" + iconName + ".png";
+    }
+
+    protected void setIconName(String iconName) {
+        this.iconName = iconName;
+    }
+
+    public void setGameInfo(GameInfo gameInfo) {
+        this.gameInfo = gameInfo;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     public boolean move(Field field) {
@@ -128,17 +150,5 @@ public abstract class Piece implements Rendable {
         }
 
         return true;
-    }
-
-    public String getIconPath() {
-        return "./main/resources/" + iconName + ".png";
-    }
-
-    protected void setIconName(String iconName) {
-        this.iconName = iconName;
-    }
-
-    public void setGameInfo(GameInfo gameInfo) {
-        this.gameInfo = gameInfo;
     }
 }

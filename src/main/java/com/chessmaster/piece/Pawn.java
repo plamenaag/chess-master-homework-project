@@ -10,7 +10,7 @@ public class Pawn extends Piece {
     private boolean hasMoved;
 
     public Pawn(String color, Field field, PawnMoveDirection moveDirection) {
-        super(color, field, 1, 1);
+        super(color, field, 1, 1, 4);
         this.hasMoved = false;
         this.moveDirection = moveDirection;
         if (color.equals(Color.BLACK)) {
