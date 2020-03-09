@@ -1,5 +1,6 @@
 package main.java.com.chessmaster.manager;
 
+import main.java.com.chessmaster.CustomStack;
 import main.java.com.chessmaster.config.Constants;
 import main.java.com.chessmaster.piece.Blastable;
 import main.java.com.chessmaster.piece.Piece;
@@ -9,6 +10,8 @@ import main.java.com.chessmaster.config.Color;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -21,7 +24,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("ALL")
-public class GameEngine extends JFrame implements MouseListener {
+public class GameEngine extends JFrame implements MouseListener, KeyListener {
     private Scanner scanner;
     private GameBoard gameBoard;
     private List<Player> players;
@@ -34,6 +37,9 @@ public class GameEngine extends JFrame implements MouseListener {
     private Field selectedFieldToMoveTo;
     private String mouseBtnClicked;
     private List<Field> validMoves;
+    private CustomStack<GameEngineStateInfo> undoStack;
+    private CustomStack<GameEngineStateInfo> redoStack;
+    private GameEngineStateInfo currentSnapshot;
 
     public GameEngine(GameBoard gameBoard, List<Player> players, GameInfo gameInfo) {
         super();
@@ -62,6 +68,7 @@ public class GameEngine extends JFrame implements MouseListener {
         this.setVisible(true);
         this.setLayout(null);
         this.addMouseListener(this);
+        this.addKeyListener(this);
         this.setLocationRelativeTo(null);// center the dialog in the screen
         this.getRootPane().setBorder(BorderFactory.createMatteBorder(Constants.BORDER_WIDTH,
                 Constants.BORDER_WIDTH, Constants.BORDER_WIDTH, Constants.BORDER_WIDTH, java.awt.Color.RED));
@@ -84,6 +91,7 @@ public class GameEngine extends JFrame implements MouseListener {
             this.selectedFieldToMoveTo = null;
             currentPlayer = nextPlayer;
             gameInfo.addMsg((currentPlayer.getColor().equals(Color.WHITE) ? "White" : "Black") + " Player's move.");
+            makeSnapshot();
         }
 
         this.selectedPiece = selectPiece(currentPlayer);
@@ -112,8 +120,8 @@ public class GameEngine extends JFrame implements MouseListener {
             validMove = selectedPiece.move(selectedFieldToMoveTo);
         }
 
-        validMoves = null;
 
+        validMoves = null;
         if (validMove) {
             if (possibleKill != null) {
                 currentPlayer.setScore(currentPlayer.getScore() + possibleKill.getPoints());
@@ -150,8 +158,14 @@ public class GameEngine extends JFrame implements MouseListener {
         Player blackPlayer = players.stream().filter(p -> p.getColor().equals(Color.BLACK)).findFirst().orElse(null);
         g.setFont(new Font("arial", Font.PLAIN, 14));
         g.drawString("White player score: " + whitePlayer.getScore(), 390, 65);
-        g.setFont(new Font("arial", Font.PLAIN, 14));
         g.drawString("Black player score: " + blackPlayer.getScore(), 390, 80);
+
+        if (!this.getUndoStack().isEmpty()) {
+            g.drawString("Press U for undo", 390, 95);
+        }
+        if (!this.getRedoStack().isEmpty()) {
+            g.drawString("Press R for redo", 390, 110);
+        }
 
         g.setFont(new Font("arial", Font.PLAIN, 14));
         int msgStartY = 45;
@@ -269,6 +283,54 @@ public class GameEngine extends JFrame implements MouseListener {
         }
     }
 
+    private void makeSnapshot() {
+        if (currentSnapshot != null) {
+            this.getUndoStack().push(currentSnapshot);
+        }
+        currentSnapshot = new GameEngineStateInfo(this.gameBoard, this.gameInfo, this.players, this.currentPlayer);
+
+        this.redoStack = new CustomStack<>();
+    }
+
+    private void undo() {
+        if (!this.getUndoStack().isEmpty()) {
+            this.cleanVariables();
+            this.getRedoStack().push(currentSnapshot);
+            GameEngineStateInfo gameEngineStateInfo = this.getUndoStack().pop();
+            replaceWithSnapshot(gameEngineStateInfo);
+            currentSnapshot = gameEngineStateInfo;
+            this.repaint();
+        }
+    }
+
+    private void redo() {
+        if (!this.getRedoStack().isEmpty()) {
+            this.cleanVariables();
+            GameEngineStateInfo gameEngineStateInfo = this.getRedoStack().pop();
+            replaceWithSnapshot(gameEngineStateInfo);
+            this.getUndoStack().push(currentSnapshot);
+            currentSnapshot = gameEngineStateInfo;
+            this.repaint();
+        }
+
+    }
+
+    private void cleanVariables() {
+        this.clickedFieldForSelectedFieldToMoveTo = null;
+        this.clickedFieldForSelectedPiece = null;
+        this.selectedPiece = null;
+        this.selectedFieldToMoveTo = null;
+        this.validMoves = null;
+    }
+
+    private void replaceWithSnapshot(GameEngineStateInfo snapshot) {
+        GameEngineStateInfo gameEngineStateInfo = new GameEngineStateInfo(snapshot.getGameBoard(), snapshot.getGameInfo(), snapshot.getPlayers(), snapshot.getCurrentPlayer());
+        this.gameBoard = gameEngineStateInfo.getGameBoard();
+        this.gameInfo = gameEngineStateInfo.getGameInfo();
+        this.players = gameEngineStateInfo.getPlayers();
+        this.currentPlayer = gameEngineStateInfo.getCurrentPlayer();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
     }
@@ -314,5 +376,39 @@ public class GameEngine extends JFrame implements MouseListener {
         }
 
         return null;
+    }
+
+    public CustomStack<GameEngineStateInfo> getUndoStack() {
+        if (undoStack == null) {
+            undoStack = new CustomStack<>();
+        }
+        return undoStack;
+    }
+
+    public CustomStack<GameEngineStateInfo> getRedoStack() {
+        if (redoStack == null) {
+            redoStack = new CustomStack<>();
+        }
+        return redoStack;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_R) {
+            redo();
+        } else if (e.getKeyCode() == KeyEvent.VK_U) {
+            undo();
+        }
     }
 }

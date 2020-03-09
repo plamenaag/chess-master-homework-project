@@ -36,4 +36,15 @@ public class GameInfo {
     public void setSuppressAdd(boolean suppressAdd) {
         this.suppressAdd = suppressAdd;
     }
+
+    public GameInfo copy() {
+        GameInfo gameInfoCopy = new GameInfo();
+        gameInfoCopy.setSuppressAdd(this.isSuppressAdd());
+        gameInfoCopy.msgCount = this.msgCount;
+        List<String> messages = new ArrayList<>(this.infoList);
+
+        gameInfoCopy.infoList = messages;
+
+        return gameInfoCopy;
+    }
 }

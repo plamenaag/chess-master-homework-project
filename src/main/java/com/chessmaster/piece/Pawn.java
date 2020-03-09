@@ -3,11 +3,13 @@ package main.java.com.chessmaster.piece;
 import main.java.com.chessmaster.config.Color;
 import main.java.com.chessmaster.config.PawnMoveDirection;
 import main.java.com.chessmaster.manager.Field;
+import main.java.com.chessmaster.manager.GameBoard;
+import main.java.com.chessmaster.manager.GameInfo;
 
 public class Pawn extends Piece {
 
-    private PawnMoveDirection moveDirection;
-    private boolean hasMoved;
+    protected PawnMoveDirection moveDirection;
+    protected boolean hasMoved;
 
     public Pawn(String color, Field field, PawnMoveDirection moveDirection) {
         super(color, field, 1, 1, 4);
@@ -18,6 +20,15 @@ public class Pawn extends Piece {
         } else {
             this.setIconName("wp");
         }
+    }
+
+    @Override
+    public Piece copy(Field field, GameInfo gameInfo, GameBoard gameBoard) {
+        Pawn pieceCopy = new Pawn(this.getColor(), field, this.moveDirection);
+        pieceCopy.hasMoved = this.hasMoved;
+        pieceCopy.setGameBoard(gameBoard);
+        pieceCopy.setGameInfo(gameInfo);
+        return pieceCopy;
     }
 
     @Override
@@ -37,7 +48,6 @@ public class Pawn extends Piece {
 
         Field currentField = this.getField();
 
-        // check movement direction
         if (this.moveDirection == PawnMoveDirection.UP) {
             if (currentField.getYPosition() > field.getYPosition()) {
                 if (super.gameInfo != null) {
@@ -58,7 +68,6 @@ public class Pawn extends Piece {
             }
         }
 
-        // pawn has not moved from start position and can move two positions
         if (!hasMoved && currentField.getXPosition() == field.getXPosition()
                 && (Math.abs(currentField.getYPosition() - field.getYPosition()) == 1
                 || Math.abs(currentField.getYPosition() - field.getYPosition()) == 2)
@@ -74,13 +83,11 @@ public class Pawn extends Piece {
             return true;
         }
 
-        // pawn has moved from start position and can move only one forward
         if (hasMoved && currentField.getXPosition() == field.getXPosition()
                 && Math.abs(currentField.getYPosition() - field.getYPosition()) == 1 && field.isEmpty()) {
             return true;
         }
 
-        // pawn can move by diagonal if there is an enemy piece
         if (Math.abs(currentField.getXPosition() - field.getXPosition()) == 1
                 && Math.abs(currentField.getYPosition() - field.getYPosition()) == 1 && !field.isEmpty()
                 && this.isEnemy(field.getPiece())) {

@@ -14,10 +14,6 @@ public class GameBoard implements Rendable {
         initializeFields(sizeX, sizeY);
     }
 
-    // this constructor is calling the 1st constructor
-    // example: you want to create GameBoard 5x5
-    // if you call GameBoard(5); - > this will call the
-    // constructor above and pass him the value of 5 TWICE
     public GameBoard(int size) {
         this(size, size);
     }
@@ -40,7 +36,7 @@ public class GameBoard implements Rendable {
         printXs(getSizeX());
         for (int y = 0; y < getSizeY(); y++) {
             printLine(getSizeX());
-            System.out.print(y+"|");
+            System.out.print(y + "|");
             for (int x = 0; x < getSizeX(); x++) {
                 Field field = getFieldByPosition(x, y);
                 field.render();

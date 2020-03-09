@@ -2,6 +2,8 @@ package main.java.com.chessmaster.piece;
 
 import main.java.com.chessmaster.config.Color;
 import main.java.com.chessmaster.manager.Field;
+import main.java.com.chessmaster.manager.GameBoard;
+import main.java.com.chessmaster.manager.GameInfo;
 
 @SuppressWarnings("ALL")
 public class Bishop extends Piece {
@@ -13,6 +15,14 @@ public class Bishop extends Piece {
         } else {
             this.setIconName("wb");
         }
+    }
+
+    @Override
+    public Piece copy(Field field, GameInfo gameInfo, GameBoard gameBoard) {
+        Bishop pieceCopy = new Bishop(this.getColor(), field);
+        pieceCopy.setGameBoard(gameBoard);
+        pieceCopy.setGameInfo(gameInfo);
+        return pieceCopy;
     }
 
     @Override

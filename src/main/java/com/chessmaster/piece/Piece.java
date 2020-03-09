@@ -25,6 +25,8 @@ public abstract class Piece implements Rendable {
         this.points = points;
     }
 
+    public abstract Piece copy(Field field, GameInfo gameInfo, GameBoard gameBoard);
+
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }

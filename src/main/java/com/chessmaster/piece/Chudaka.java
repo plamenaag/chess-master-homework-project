@@ -3,6 +3,8 @@ package main.java.com.chessmaster.piece;
 import main.java.com.chessmaster.config.Color;
 import main.java.com.chessmaster.config.PawnMoveDirection;
 import main.java.com.chessmaster.manager.Field;
+import main.java.com.chessmaster.manager.GameBoard;
+import main.java.com.chessmaster.manager.GameInfo;
 
 @SuppressWarnings("ALL")
 public class Chudaka extends Pawn implements Blastable {
@@ -16,6 +18,15 @@ public class Chudaka extends Pawn implements Blastable {
         } else {
             this.setIconName("wch");
         }
+    }
+
+    @Override
+    public Piece copy(Field field, GameInfo gameInfo, GameBoard gameBoard) {
+        Chudaka pieceCopy = new Chudaka(this.getColor(), field, this.moveDirection);
+        pieceCopy.hasMoved = this.hasMoved;
+        pieceCopy.setGameBoard(gameBoard);
+        pieceCopy.setGameInfo(gameInfo);
+        return pieceCopy;
     }
 
     @Override

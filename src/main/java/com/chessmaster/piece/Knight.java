@@ -2,6 +2,8 @@ package main.java.com.chessmaster.piece;
 
 import main.java.com.chessmaster.config.Color;
 import main.java.com.chessmaster.manager.Field;
+import main.java.com.chessmaster.manager.GameBoard;
+import main.java.com.chessmaster.manager.GameInfo;
 
 public class Knight extends Piece {
 
@@ -12,6 +14,14 @@ public class Knight extends Piece {
         } else {
             super.setIconName("wk");
         }
+    }
+
+    @Override
+    public Piece copy(Field field, GameInfo gameInfo, GameBoard gameBoard) {
+        Knight pieceCopy = new Knight(this.getColor(), field);
+        pieceCopy.setGameBoard(gameBoard);
+        pieceCopy.setGameInfo(gameInfo);
+        return pieceCopy;
     }
 
     @Override

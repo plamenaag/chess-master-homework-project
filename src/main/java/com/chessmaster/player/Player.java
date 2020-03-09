@@ -30,4 +30,11 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public Player copy() {
+        Player playerCopy = new Player(this.getColor());
+        playerCopy.setTurnCount(this.getTurnCount());
+        playerCopy.setScore(this.getScore());
+        return playerCopy;
+    }
 }

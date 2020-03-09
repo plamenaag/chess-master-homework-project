@@ -31,7 +31,6 @@ public class Field implements Rendable {
 
     public int getScreenYPosition() {
         return Constants.BAR_HEIGHT + Constants.BORDER_WIDTH + 1 + this.getYPosition() * (Constants.BLOCK_SIZE + 1) + Constants.GAME_INFO_DISPLAY_HEIGHT;
-
     }
 
     public Piece getPiece() {
@@ -48,14 +47,10 @@ public class Field implements Rendable {
             return false;
         }
 
-        // this is for checking if the argument you pass to the function
-        // is of type Field, because if it's not, there's no need to compare the fields in the 'if' below and cast them
-        //as well
         if (!(field instanceof Field)) {
             return false;
         }
 
-        // this is for checking the fields positions, not their references
         if (((Field) field).getXPosition() == this.getXPosition() &&
                 ((Field) field).getYPosition() == this.getYPosition()) {
             return true;
